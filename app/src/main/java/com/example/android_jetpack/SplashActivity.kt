@@ -1,10 +1,15 @@
 package com.example.android_jetpack
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.example.android_jetpack.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -24,6 +29,27 @@ class SplashActivity : AppCompatActivity() {
             )
         }
 
+        val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash)
+        splashBinding.tvAppName.animation = splashAnimation
+
         //splashBinding.tvAppName.text = "Hello world"
+
+        splashAnimation.setAnimationListener(object: Animation.AnimationListener{
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    finish()
+                }, 1000)
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+
+            }
+
+        })
     }
 }
